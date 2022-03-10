@@ -1,63 +1,35 @@
+import { Box, ScrollView, TextArea } from "native-base";
 import React from "react";
-import {
-  Modal,
-  Text,
-  TextArea,
-  Icon,
-  Box,
-  Container,
-  HStack,
-} from "native-base";
-import { AntDesign } from "@expo/vector-icons";
-import { TouchableOpacity } from "react-native";
 
-export const Note = ({ show = false, onClose = () => {} }) => {
+const Note = () => {
   return (
-    <Modal
-      isOpen={show}
-      onClose={() => {
-        onClose();
-      }}
+    <Box
+      backgroundColor={"primary1.500"}
+      width={"200px"}
+      height={"150px"}
+      borderRadius={40}
+      alignItems={"center"}
     >
-      <Modal.Content width="350px" height="500px" flex={1}>
-        <Modal.Header backgroundColor="primary1.500">
-          <Modal.CloseButton marginTop={1} />
-          <Text color="white" fontSize={19}>
-            Write a note
-          </Text>
-        </Modal.Header>
-        <TextArea
-          w={"100%"}
-          h={"75%"}
-          fontSize={25}
-          borderColor={"primary3.500"}
-          borderWidth={0}
-        ></TextArea>
-
-        <HStack space={"65%"} justifyContent={"center"}>
-          <Container>
-            <TouchableOpacity>
-              <Icon
-                as={AntDesign}
-                name="delete"
-                size="50px"
-                color="primary1.300"
-              />
-            </TouchableOpacity>
-          </Container>
-          <Container>
-            <TouchableOpacity>
-              <Icon
-                as={AntDesign}
-                name="checkcircle"
-                size="50px"
-                color="primary1.500"
-              />
-            </TouchableOpacity>
-          </Container>
-        </HStack>
-      </Modal.Content>
-    </Modal>
+      <Box
+        h={"150px"}
+        w={"170px"}
+        backgroundColor="primary1.500"
+        borderRadius={40}
+        justifyContent={"center"}
+      >
+        <ScrollView maxHeight={"118px"}>
+          <TextArea fontSize={18} borderWidth={0}>
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum."
+          </TextArea>
+        </ScrollView>
+      </Box>
+    </Box>
   );
 };
 
