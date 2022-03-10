@@ -15,7 +15,7 @@ const AddNote = ({ show = false, onClose = () => {} }) => {
     >
       <Modal.Content width="350px" height="500px" flex={1}>
         <Modal.Header backgroundColor="primary1.500">
-          <Modal.CloseButton marginTop={1} />
+          <Modal.CloseButton marginTop={2} />
           <TextArea
             color="white"
             fontSize={19}
@@ -37,7 +37,12 @@ const AddNote = ({ show = false, onClose = () => {} }) => {
         ></TextArea>
         <HStack space={"65%"} justifyContent={"center"}>
           <Container>
-            <TouchableOpacity onPress={() => onClose()}>
+            <TouchableOpacity
+              onPress={() => {
+                onClose();
+                setNoteText("");
+              }}
+            >
               <Icon
                 as={AntDesign}
                 name="delete"
