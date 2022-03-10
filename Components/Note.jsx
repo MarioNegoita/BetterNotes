@@ -41,7 +41,7 @@ export const Note = ({ show = false, onClose = () => {} }) => {
                 as={AntDesign}
                 name="delete"
                 size="50px"
-                color="primary1.500"
+                color="primary1.300"
               />
             </TouchableOpacity>
           </Container>
