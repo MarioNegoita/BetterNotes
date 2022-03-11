@@ -3,8 +3,13 @@ import { Modal, Text, TextArea, Icon, Container, HStack } from "native-base";
 import { AntDesign } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
 
-const AddNote = ({ show = false, onClose = () => {} }) => {
-  const [noteText, setNoteText] = useState();
+const AddNote = ({ show = false, AddNote, onClose = () => {} }) => {
+  const [noteText, setNoteText] = useState("");
+
+  const handleSaveNote = () => {
+    AddNote(noteText);
+    onClose();
+  };
 
   return (
     <Modal
@@ -33,7 +38,9 @@ const AddNote = ({ show = false, onClose = () => {} }) => {
           borderColor={"primary3.500"}
           borderWidth={0}
           value={noteText}
-          onChangeText={(text) => setNoteText(text)}
+          onChangeText={(text) => {
+            setNoteText(text);
+          }}
         ></TextArea>
         <HStack space={"65%"} justifyContent={"center"}>
           <Container>
@@ -52,7 +59,7 @@ const AddNote = ({ show = false, onClose = () => {} }) => {
             </TouchableOpacity>
           </Container>
           <Container>
-            <TouchableOpacity onPress={() => console.log(noteText)}>
+            <TouchableOpacity onPress={() => handleSaveNote()}>
               <Icon
                 as={AntDesign}
                 name="checkcircle"

@@ -15,6 +15,15 @@ const HomeScreen = () => {
     setShowModal(true);
   };
 
+  const [note, setNote] = useState();
+  const [noteItems, setNoteItems] = useState([]);
+
+  const handleAddNoteOnScreen = (text) => {
+    console.log(text);
+    setNoteItems([...noteItems, text]);
+    setNote(null);
+  };
+
   return (
     <Box flex={1} bg={"primary3.500"}>
       <HStack space={10} margin={15} justifyContent="center">
@@ -27,11 +36,13 @@ const HomeScreen = () => {
             marginTop={10}
           />
         </TouchableOpacity>
-
-        <Note />
+        {noteItems.map((item, index) => {
+          return <Note key={index} text={item} />;
+        })}
       </HStack>
       <TouchableWithoutFeedback>
         <AddNote
+          AddNote={handleAddNoteOnScreen}
           show={showModal}
           onClose={() => {
             setShowModal(false);
