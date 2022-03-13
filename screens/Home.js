@@ -16,21 +16,32 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import AddNote from "../Components/AddNote";
+import ChangeNote from "../Components/ChangeNote";
 import Note from "../Components/Note";
 
 const HomeScreen = () => {
   const [showModal, setShowModal] = useState(false);
+  const [showModal2, setShowModal2] = useState(false);
   const handleAddNote = () => {
     setShowModal(true);
+  };
+
+  const handleChangeNote = () => {
+    setShowModal2(true);
   };
 
   const [note, setNote] = useState();
   const [noteItems, setNoteItems] = useState([]);
 
   const handleAddNoteOnScreen = (text) => {
-    console.log(text);
     setNoteItems([...noteItems, text]);
     setNote(null);
+  };
+
+  const changeText = () => {
+    noteItems[0] = "mario";
+    let itemsCopy = [...noteItems];
+    setNoteItems(itemsCopy);
   };
 
   return (
@@ -53,7 +64,11 @@ const HomeScreen = () => {
           justifyContent={"center"}
         >
           {noteItems.map((item, index) => {
-            return <Note key={index} text={item} />;
+            return (
+              <TouchableOpacity key={index} onPress={() => handleChangeNote()}>
+                <Note text={item} />
+              </TouchableOpacity>
+            );
           })}
         </Box>
 
@@ -66,7 +81,18 @@ const HomeScreen = () => {
             }}
           />
         </TouchableWithoutFeedback>
+
+        <TouchableWithoutFeedback>
+          <ChangeNote
+            show={showModal2}
+            onClose={() => {
+              setShowModal2(false);
+            }}
+            notesText={"Lorem ipsum"}
+          />
+        </TouchableWithoutFeedback>
       </Box>
+      <Button onPress={() => changeText()}>Write text</Button>
     </ScrollView>
   );
 };

@@ -1,15 +1,10 @@
 import React, { useState } from "react";
-import { Modal, Text, TextArea, Icon, Container, HStack } from "native-base";
+import { Modal, Text, TextArea, Icon, HStack } from "native-base";
 import { AntDesign } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
 
-const AddNote = ({ show = false, AddNote, onClose = () => {} }) => {
-  const [noteText, setNoteText] = useState("");
-
-  const handleSaveNote = () => {
-    AddNote(noteText);
-    onClose();
-  };
+const ChangeNote = ({ show = false, onClose = () => {}, notesText }) => {
+  const [noteText, setNoteText] = useState(notesText);
 
   return (
     <Modal
@@ -28,7 +23,7 @@ const AddNote = ({ show = false, AddNote, onClose = () => {} }) => {
             maxWidth={"80%"}
             borderWidth={0}
           >
-            Pick a title and write a note
+            Schimba textul
           </TextArea>
         </Modal.Header>
         <TextArea
@@ -57,7 +52,11 @@ const AddNote = ({ show = false, AddNote, onClose = () => {} }) => {
             />
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => handleSaveNote()}>
+          <TouchableOpacity
+            onPress={() => {
+              console.log(noteText);
+            }}
+          >
             <Icon
               as={AntDesign}
               name="checkcircle"
@@ -71,4 +70,4 @@ const AddNote = ({ show = false, AddNote, onClose = () => {} }) => {
   );
 };
 
-export default AddNote;
+export default ChangeNote;
