@@ -1,11 +1,21 @@
 import React, { useState } from "react";
-import { Icon, HStack, Modal, Box, KeyboardAvoidingView } from "native-base";
+import {
+  Icon,
+  HStack,
+  Box,
+  View,
+  Container,
+  ScrollView,
+  Button,
+  Text,
+} from "native-base";
 import { AntDesign } from "@expo/vector-icons";
 import {
   TouchableOpacity,
   StyleSheet,
   TouchableWithoutFeedback,
 } from "react-native";
+import AddNote from "../Components/AddNote";
 import Note from "../Components/Note";
 
 const HomeScreen = () => {
@@ -14,25 +24,50 @@ const HomeScreen = () => {
     setShowModal(true);
   };
 
-  return (
-    <Box backgroundColor={"primary3.500"} flex={1}>
-      <TouchableWithoutFeedback>
-     
-        <Note
-          show={showModal}
-          onClose={() => {
-            setShowModal(false);
-          }}
-        />
-      </TouchableWithoutFeedback>
-      
+  const [note, setNote] = useState();
+  const [noteItems, setNoteItems] = useState([]);
 
-      <HStack space={3} margin="15">
+  const handleAddNoteOnScreen = (text) => {
+    console.log(text);
+    setNoteItems([...noteItems, text]);
+    setNote(null);
+  };
+
+  return (
+    <ScrollView bg="primary3.500" flex={1}>
+      <Box flex={1} alignItems="center">
         <TouchableOpacity onPress={() => handleAddNote()}>
-          <Icon as={AntDesign} name="addfile" size="60px" color="primary1.500" />
+          <Icon
+            as={AntDesign}
+            name="addfile"
+            size="60px"
+            color="primary1.500"
+            margin={10}
+          />
         </TouchableOpacity>
-      </HStack>
-    </Box>
+
+        <Box
+          alignItems="center"
+          flexDirection={"row"}
+          flexWrap="wrap"
+          justifyContent={"center"}
+        >
+          {noteItems.map((item, index) => {
+            return <Note key={index} text={item} />;
+          })}
+        </Box>
+
+        <TouchableWithoutFeedback>
+          <AddNote
+            AddNote={handleAddNoteOnScreen}
+            show={showModal}
+            onClose={() => {
+              setShowModal(false);
+            }}
+          />
+        </TouchableWithoutFeedback>
+      </Box>
+    </ScrollView>
   );
 };
 
