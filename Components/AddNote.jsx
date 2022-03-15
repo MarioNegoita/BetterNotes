@@ -3,11 +3,16 @@ import { Modal, Text, TextArea, Icon, Container, HStack } from "native-base";
 import { AntDesign } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
 
-const AddNote = ({ show = false, AddNote, onClose = () => {} }) => {
+const AddNote = ({
+  show = false,
+  addNote = (text) => {},
+  onClose = () => {},
+}) => {
   const [noteText, setNoteText] = useState("");
 
   const handleSaveNote = () => {
-    AddNote(noteText);
+    addNote(noteText);
+    setNoteText("");
     onClose();
   };
 

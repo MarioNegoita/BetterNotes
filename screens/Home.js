@@ -1,14 +1,5 @@
-import React, { useState } from "react";
-import {
-  Icon,
-  HStack,
-  Box,
-  View,
-  Container,
-  ScrollView,
-  Button,
-  Text,
-} from "native-base";
+import React, { useCallback, useState } from "react";
+import { Icon, Box, ScrollView, Button } from "native-base";
 import { AntDesign } from "@expo/vector-icons";
 import {
   TouchableOpacity,
@@ -16,32 +7,35 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import AddNote from "../Components/AddNote";
-import ChangeNote from "../Components/ChangeNote";
 import Note from "../Components/Note";
 
 const HomeScreen = () => {
   const [showModal, setShowModal] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
+
+  const [note, setNote] = useState();
+  const [noteItems, setNoteItems] = useState([]);
+  const [indexNr, setIndexNr] = useState(0);
+
   const handleAddNote = () => {
     setShowModal(true);
   };
 
-  const handleChangeNote = () => {
+  const handleChangeNote = (nr) => {
     setShowModal2(true);
+    console.log("INDEX:", nr);
+    setIndexNr(nr);
   };
 
-  const [note, setNote] = useState();
-  const [noteItems, setNoteItems] = useState([]);
+  const handleUpdateNote = (updateText, nr) => {
+    noteItems[nr] = updateText;
+    let itemsCopy = [...noteItems];
+    setNoteItems(itemsCopy);
+  };
 
   const handleAddNoteOnScreen = (text) => {
     setNoteItems([...noteItems, text]);
     setNote(null);
-  };
-
-  const changeText = () => {
-    noteItems[0] = "mario";
-    let itemsCopy = [...noteItems];
-    setNoteItems(itemsCopy);
   };
 
   return (
@@ -56,7 +50,6 @@ const HomeScreen = () => {
             margin={10}
           />
         </TouchableOpacity>
-
         <Box
           alignItems="center"
           flexDirection={"row"}
@@ -65,34 +58,36 @@ const HomeScreen = () => {
         >
           {noteItems.map((item, index) => {
             return (
-              <TouchableOpacity key={index} onPress={() => handleChangeNote()}>
-                <Note text={item} />
+              <TouchableOpacity
+                key={index}
+                onPress={() => handleChangeNote(index)}
+              >
+                <Note
+                  upDateText={(text, index) => handleUpdateNote(text, index)}
+                  NoteText={item}
+                  liveNoteText={noteItems[indexNr]}
+                  nr={indexNr}
+                  show={showModal2}
+                  onClose={() => {
+                    setShowModal2(false);
+                  }}
+                />
               </TouchableOpacity>
             );
           })}
         </Box>
-
         <TouchableWithoutFeedback>
           <AddNote
-            AddNote={handleAddNoteOnScreen}
+            addNote={(text) => {
+              handleAddNoteOnScreen(text);
+            }}
             show={showModal}
             onClose={() => {
               setShowModal(false);
             }}
           />
         </TouchableWithoutFeedback>
-
-        <TouchableWithoutFeedback>
-          <ChangeNote
-            show={showModal2}
-            onClose={() => {
-              setShowModal2(false);
-            }}
-            notesText={"Lorem ipsum"}
-          />
-        </TouchableWithoutFeedback>
       </Box>
-      <Button onPress={() => changeText()}>Write text</Button>
     </ScrollView>
   );
 };
