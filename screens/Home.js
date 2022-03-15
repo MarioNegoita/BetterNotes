@@ -39,7 +39,7 @@ const HomeScreen = () => {
   };
 
   return (
-    <ScrollView bg="primary3.500" flex={1}>
+    <ScrollView flex={1}>
       <Box flex={1} alignItems="center">
         <TouchableOpacity onPress={() => handleAddNote()}>
           <Icon
