@@ -3,11 +3,16 @@ import { Modal, Text, TextArea, Icon, Container, HStack } from "native-base";
 import { AntDesign } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
 
-const AddNote = ({ show = false, AddNote, onClose = () => {} }) => {
+const AddNote = ({
+  show = false,
+  addNote = (text) => {},
+  onClose = () => {},
+}) => {
   const [noteText, setNoteText] = useState("");
 
   const handleSaveNote = () => {
-    AddNote(noteText);
+    addNote(noteText);
+    setNoteText("");
     onClose();
   };
 
@@ -43,31 +48,28 @@ const AddNote = ({ show = false, AddNote, onClose = () => {} }) => {
           }}
         ></TextArea>
         <HStack space={"65%"} justifyContent={"center"}>
-          <Container>
-            <TouchableOpacity
-              onPress={() => {
-                onClose();
-                setNoteText("");
-              }}
-            >
-              <Icon
-                as={AntDesign}
-                name="delete"
-                size="50px"
-                color="primary1.500"
-              />
-            </TouchableOpacity>
-          </Container>
-          <Container>
-            <TouchableOpacity onPress={() => handleSaveNote()}>
-              <Icon
-                as={AntDesign}
-                name="checkcircle"
-                size="50px"
-                color="primary1.500"
-              />
-            </TouchableOpacity>
-          </Container>
+          <TouchableOpacity
+            onPress={() => {
+              onClose();
+              setNoteText("");
+            }}
+          >
+            <Icon
+              as={AntDesign}
+              name="delete"
+              size="50px"
+              color="primary1.500"
+            />
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => handleSaveNote()}>
+            <Icon
+              as={AntDesign}
+              name="checkcircle"
+              size="50px"
+              color="primary1.500"
+            />
+          </TouchableOpacity>
         </HStack>
       </Modal.Content>
     </Modal>
