@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { Box, Center, StatusBar } from "native-base";
+import {
+  Box,
+  Button,
+  Center,
+  KeyboardAvoidingView,
+  StatusBar,
+  Flex,
+  Divider,
+} from "native-base";
 import {
   TextInput,
   StyleSheet,
@@ -26,7 +34,10 @@ const LoginScreen = () => {
           onBlur={() => {
             setIsFocusedEmail(false);
           }}
-          style={Styles.form}
+          style={[
+            Styles.form,
+            isFocusedEmail ? Styles.formFocus : Styles.formBlur,
+          ]}
           backgroundColor="primary3.500"
         >
           <TextInput
@@ -43,7 +54,10 @@ const LoginScreen = () => {
           onBlur={() => {
             setIsFocusedPassword(false);
           }}
-          style={Styles.form}
+          style={[
+            Styles.form,
+            isFocusedPassword ? Styles.formFocus : Styles.formBlur,
+          ]}
           marginTop={15}
           backgroundColor="primary3.500"
         >
@@ -51,7 +65,39 @@ const LoginScreen = () => {
             placeholder="Password"
             style={Styles.inputTextStyle}
             placeholderTextColor={`${isFocusedPassword ? "black" : "#8e8e8e"}`}
+            secureTextEntry={true}
           />
+        </Box>
+
+        <Button
+          color={"primary3.500"}
+          borderRadius="10"
+          bg={"primary3.500"}
+          _pressed={{ bg: "primary3.600" }}
+          width={"30%"}
+          top={"25%"}
+          // position="absolute"
+        >
+          <Text>Sign In</Text>
+        </Button>
+        <Box alignItems="center" top="30%">
+          <Flex direction="row" h="58" p="4">
+            <Text>Better</Text>
+            <Divider
+              bg="emerald.500"
+              thickness="2"
+              mx="2"
+              orientation="vertical"
+            />
+            <Text>Simple</Text>
+            <Divider
+              bg="indigo.500"
+              thickness="2"
+              mx="2"
+              orientation="vertical"
+            />
+            <Text>Easier</Text>
+          </Flex>
         </Box>
       </Center>
     </TouchableWithoutFeedback>
@@ -73,13 +119,18 @@ const Styles = StyleSheet.create({
     borderColor: "black",
     borderWidth: 2,
   },
+  formFocus: {
+    borderColor: "black",
+  },
+  formBlur: {
+    borderColor: "#F4976C",
+  },
   inputTextStyle: {
     fontSize: 20,
     marginLeft: 5,
   },
   titleStyle: {
-    position: "absolute",
-    top: "25%",
+    bottom: "15%",
   },
 });
 
