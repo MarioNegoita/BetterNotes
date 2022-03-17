@@ -18,19 +18,20 @@ export default function App() {
               headerShown: false,
             }}
           />
+
+          <Stack.Screen
+            name="Home"
+            component={HomeScreen}
+            options={{
+              title: "BetterNotes",
+              headerStyle: {
+                backgroundColor: "#F4976C",
+              },
+              headerTitleAlign: "center",
+              headerTintColor: "#fff",
+            }}
+          />
         </Stack.Navigator>
-        <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{
-            title: "BetterNotes",
-            headerStyle: {
-              backgroundColor: "#F4976C",
-            },
-            headerTitleAlign: "center",
-            headerTintColor: "#fff",
-          }}
-        />
       </NavigationContainer>
     </NativeBaseProvider>
   );

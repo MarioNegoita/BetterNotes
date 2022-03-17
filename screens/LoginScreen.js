@@ -7,26 +7,50 @@ import {
   StatusBar,
   Flex,
   Divider,
+  Icon,
+  HStack,
 } from "native-base";
 import {
   TextInput,
   StyleSheet,
   TouchableWithoutFeedback,
   Keyboard,
+  TouchableOpacity,
   Text,
 } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
-const LoginScreen = () => {
+const LoginScreen = ({ navigation }) => {
   const [isFocusedEmail, setIsFocusedEmail] = useState(false);
   const [isFocusedPassword, setIsFocusedPassword] = useState(false);
+  const [titleColor, setTitleColor] = useState(0);
+
+  const colors = ["#ECECEC", "#bef264", "#4f46e5", "#6ee7b7", "#0891b2"];
+
+  const switchTitleColor = () => {
+    const newColorIndex = titleColor + 1;
+    colors[newColorIndex] ? setTitleColor(newColorIndex) : setTitleColor(0);
+  };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Center flex={1} backgroundColor="primary1.500">
         <StatusBar backgroundColor={"black"} barStyle={"dark-light"} />
-        <Box style={Styles.titleStyle}>
-          <Text style={Styles.title}>BETTER NOTES</Text>
-        </Box>
+
+        <TouchableOpacity
+          style={Styles.titleStyle}
+          onPress={() => switchTitleColor()}
+        >
+          <Text
+            style={{
+              fontSize: 30,
+              fontFamily: "monospace",
+              color: colors[titleColor],
+            }}
+          >
+            BETTER NOTES
+          </Text>
+        </TouchableOpacity>
         <Box
           onFocus={() => {
             setIsFocusedEmail(true);
@@ -39,11 +63,22 @@ const LoginScreen = () => {
             isFocusedEmail ? Styles.formFocus : Styles.formBlur,
           ]}
           backgroundColor="primary3.500"
+          flexDirection={"row"}
         >
           <TextInput
             placeholder="Email"
             style={Styles.inputTextStyle}
             placeholderTextColor={`${isFocusedEmail ? "black" : "#8e8e8e"}`}
+            flex={1}
+          />
+          <Icon
+            as={Ionicons}
+            name="mail-outline"
+            style={[
+              isFocusedEmail ? Styles.inputFocusedIcon : Styles.inputBluredIcon,
+            ]}
+            size={"25px"}
+            marginRight={5}
           />
         </Box>
 
@@ -60,12 +95,25 @@ const LoginScreen = () => {
           ]}
           marginTop={15}
           backgroundColor="primary3.500"
+          flexDirection={"row"}
         >
           <TextInput
             placeholder="Password"
             style={Styles.inputTextStyle}
             placeholderTextColor={`${isFocusedPassword ? "black" : "#8e8e8e"}`}
             secureTextEntry={true}
+            flex={1}
+          />
+          <Icon
+            as={Ionicons}
+            name="eye-off-outline"
+            style={[
+              isFocusedPassword
+                ? Styles.inputFocusedIcon
+                : Styles.inputBluredIcon,
+            ]}
+            size={"25px"}
+            marginRight={5}
           />
         </Box>
 
@@ -75,10 +123,20 @@ const LoginScreen = () => {
           bg={"primary3.500"}
           _pressed={{ bg: "primary3.600" }}
           width={"30%"}
-          top={"25%"}
+          top={"15%"}
+          onPress={() => navigation.navigate("Home")}
+
           // position="absolute"
         >
-          <Text>Sign In</Text>
+          <HStack>
+            <Icon
+              as={Ionicons}
+              name="log-in-outline"
+              size={"25px"}
+              marginRight={2}
+            />
+            <Box justifyContent="center">Login</Box>
+          </HStack>
         </Button>
         <Box alignItems="center" top="30%">
           <Flex direction="row" h="58" p="4">
@@ -107,14 +165,18 @@ const LoginScreen = () => {
 const Styles = StyleSheet.create({
   title: {
     fontSize: 30,
-    color: "#ECECEC",
     fontFamily: "monospace",
+    color: "#ECECEC",
+  },
+  titleStyle: {
+    bottom: "15%",
   },
 
   form: {
     width: "70%",
     height: 60,
     justifyContent: "center",
+    alignItems: "center",
     borderRadius: 20,
     borderColor: "black",
     borderWidth: 2,
@@ -129,8 +191,12 @@ const Styles = StyleSheet.create({
     fontSize: 20,
     marginLeft: 5,
   },
-  titleStyle: {
-    bottom: "15%",
+
+  inputFocusedIcon: {
+    color: "black",
+  },
+  inputBluredIcon: {
+    color: "#DE6F6F",
   },
 });
 
